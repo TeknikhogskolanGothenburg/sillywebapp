@@ -5,14 +5,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AzureHello.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace AzureHello.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IConfiguration configuration;
+
+        public HomeController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var model = configuration["Greeting"];
+            return View("index", model);
         }
 
         public IActionResult About()
